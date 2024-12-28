@@ -4,8 +4,7 @@ def initDB():
     con = sqlite3.connect("szamolasok.db")
     cur = con.cursor()
     try:
-        cur.execute("CREATE TABLE history(id INT PRIMARY KEY AUTOINCREMENT ,egyenloseg, eredmeny)")
-        
+        cur.execute("CREATE TABLE history(egyenloseg, eredmeny)")
     except:
         pass
 
@@ -14,23 +13,28 @@ def check():
     feladvany = input("Írd be a feladványt\n>>>")
     global question
     question = feladvany
-    operatorok = ["+", "/", "-", "*", "."]
-    for operators in operatorok:
-        print(operators)
-        if feladvany in operators:
-            szamolas()
-        else:
-            print("A számolásnak tartalmaznia kell legalább egy operátort")
-            check()    
+    operatorokp = "+"
+    operatorokm = "-"
+    operatoroksz = "*"
+    operatoroko = "/"
+    
+    if operatorokp in feladvany or operatorokm in feladvany or operatoroksz in feladvany or operatoroko in feladvany:
+        szamolas()
+    else:
+        print("A számolásnak tartalmaznia kell legalább egy operátort")
+        check()    
             
     
 
 def szamolas():
+    con = sqlite3.connect("szamolasok.db")
+    cur = con.cursor()
     print(question)
-    try:
-        eredmeny = int(eval(question))
-    except:
-        print("Ez nem egy helyes feladvány!")
+    eredmeny = eval(question)
+    print(eredmeny)
+    ins = cur.execute(f"insert into history (egyenloseg, eredmeny) values ('{question}','{eredmeny}')")
+    con.commit()
+
 
 if __name__ == "__main__":
     initDB()

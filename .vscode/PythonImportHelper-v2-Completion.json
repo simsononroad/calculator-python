@@ -1,0 +1,47 @@
+[
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "initDB",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def initDB():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    try:\n        cur.execute(\"CREATE TABLE history(egyenloseg, eredmeny)\")\n    except:\n        pass\ndef check():\n    feladvany = input(\"Írd be a feladványt\\n>>>\")\n    global question",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "check",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def check():\n    feladvany = input(\"Írd be a feladványt\\n>>>\")\n    global question\n    question = feladvany\n    operatorokp = \"+\"\n    operatorokm = \"-\"\n    operatoroksz = \"*\"\n    operatoroko = \"/\"\n    if operatorokp in feladvany or operatorokm in feladvany or operatoroksz in feladvany or operatoroko in feladvany:\n        szamolas()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "szamolas",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def szamolas():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    print(question)\n    eredmeny = eval(question)\n    print(eredmeny)\n    ins = cur.execute(f\"insert into history (egyenloseg, eredmeny) values ('{question}','{eredmeny}')\")\n    con.commit()\nif __name__ == \"__main__\":\n    initDB()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "question",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "question = \"\"\ndef initDB():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    try:\n        cur.execute(\"CREATE TABLE history(egyenloseg, eredmeny)\")\n    except:\n        pass\ndef check():\n    feladvany = input(\"Írd be a feladványt\\n>>>\")",
+        "detail": "main",
+        "documentation": {}
+    }
+]
