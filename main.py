@@ -4,10 +4,28 @@ def initDB():
     con = sqlite3.connect("szamolasok.db")
     cur = con.cursor()
     try:
-        cur.execute("CREATE TABLE history(egyenloseg, eredmeny)")
+        cur.execute("CREATE TABLE history(egyenloseg, eredmeny, egyben)")
     except:
         pass
 
+
+def menu():
+    while True:
+        menu = input("Előzmények(e), Számolás(sz), kilépés(k)")
+        if menu == "e":
+            history()
+            break
+        elif menu == "sz":
+            check()
+            break
+        elif menu == "k":
+            pass
+            break
+        else:
+            pass
+
+        
+    
 
 def check():
     feladvany = input("Írd be a feladványt\n>>>")
@@ -29,13 +47,24 @@ def check():
 def szamolas():
     con = sqlite3.connect("szamolasok.db")
     cur = con.cursor()
-    print(question)
     eredmeny = eval(question)
-    print(eredmeny)
-    ins = cur.execute(f"insert into history (egyenloseg, eredmeny) values ('{question}','{eredmeny}')")
+    teljes = f"{question} = {eredmeny}"
+    print(teljes)
+    ins = cur.execute(f"insert into history (egyenloseg, eredmeny, egyben) values ('{question}','{eredmeny}', '{teljes}')")
     con.commit()
+    menu()
+
+def history():
+    con = sqlite3.connect("szamolasok.db")
+    cur = con.cursor()
+    ins = cur.execute(f"select egyben FROM history")
+    teljes = cur.fetchall()
+    for minden in teljes:
+        minden = minden[0]
+        print(minden)
+    menu()
 
 
 if __name__ == "__main__":
     initDB()
-    check()
+    menu()

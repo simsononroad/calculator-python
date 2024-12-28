@@ -13,7 +13,16 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def initDB():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    try:\n        cur.execute(\"CREATE TABLE history(egyenloseg, eredmeny)\")\n    except:\n        pass\ndef check():\n    feladvany = input(\"Írd be a feladványt\\n>>>\")\n    global question",
+        "peekOfCode": "def initDB():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    try:\n        cur.execute(\"CREATE TABLE history(egyenloseg, eredmeny, egyben)\")\n    except:\n        pass\ndef menu():\n    while True:\n        menu = input(\"Előzmények(e), Számolás(sz), kilépés(k)\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "menu",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def menu():\n    while True:\n        menu = input(\"Előzmények(e), Számolás(sz), kilépés(k)\")\n        if menu == \"e\":\n            history()\n            break\n        elif menu == \"sz\":\n            check()\n            break\n        elif menu == \"k\":",
         "detail": "main",
         "documentation": {}
     },
@@ -31,7 +40,16 @@
         "kind": 2,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "def szamolas():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    print(question)\n    eredmeny = eval(question)\n    print(eredmeny)\n    ins = cur.execute(f\"insert into history (egyenloseg, eredmeny) values ('{question}','{eredmeny}')\")\n    con.commit()\nif __name__ == \"__main__\":\n    initDB()",
+        "peekOfCode": "def szamolas():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    eredmeny = eval(question)\n    teljes = f\"{question} = {eredmeny}\"\n    print(teljes)\n    ins = cur.execute(f\"insert into history (egyenloseg, eredmeny, egyben) values ('{question}','{eredmeny}', '{teljes}')\")\n    con.commit()\n    menu()\ndef history():",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "history",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def history():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    ins = cur.execute(f\"select egyben FROM history\")\n    teljes = cur.fetchall()\n    for minden in teljes:\n        minden = minden[0]\n        print(minden)\n    menu()\nif __name__ == \"__main__\":",
         "detail": "main",
         "documentation": {}
     },
@@ -40,7 +58,7 @@
         "kind": 5,
         "importPath": "main",
         "description": "main",
-        "peekOfCode": "question = \"\"\ndef initDB():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    try:\n        cur.execute(\"CREATE TABLE history(egyenloseg, eredmeny)\")\n    except:\n        pass\ndef check():\n    feladvany = input(\"Írd be a feladványt\\n>>>\")",
+        "peekOfCode": "question = \"\"\ndef initDB():\n    con = sqlite3.connect(\"szamolasok.db\")\n    cur = con.cursor()\n    try:\n        cur.execute(\"CREATE TABLE history(egyenloseg, eredmeny, egyben)\")\n    except:\n        pass\ndef menu():\n    while True:",
         "detail": "main",
         "documentation": {}
     }
